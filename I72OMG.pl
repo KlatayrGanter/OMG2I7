@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 use warnings;
 use strict;
 # (C) GPL v3, by Klatayr Ganter, 2017
