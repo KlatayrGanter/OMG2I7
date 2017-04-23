@@ -10,10 +10,11 @@ The slang also allows for whitespace in its subroutines.
 
 Usage:
 
-# if given the range argument only affects these lines, otherwise whole document.
+```sh
+#if given the range argument only affects these lines, otherwise whole document.
 cat 'inform.i7y' | perl I72OMG.pl "10-15" > 'inform.i7z'
 
 #only affects OMG subroutines, starting with IMO.
 cat 'test.i7x' | perl OMG2I7.pl > 'omg.i7y'
-
+```
 
