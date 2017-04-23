@@ -38,7 +38,7 @@ IMO (areas disclosed - 4 cover areas) concealed by (garb - a garment) = 4 garmen
 			if covering ~ part 2 garment:
 				$other cloth = garment o covering ~ part;
 				if body layer o other cloth > current layer, next;
-			ow:
+			else:
 				part -@ areas disclosed;
 
 			BTW, covering ~ part 2 cloth;
