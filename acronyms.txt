@@ -1,0 +1,21 @@
+No guarantees on stability.
+
+# in use
+acronym	Symbol	acronym stands for	meaning in code
+AFAIK	$	As far as I know	Let .. be the various-to-one relation of ... to ... - 'hashmap'
+FYI	$	For your Information	Let .. be - declare variable
+IC		In case			If .*: (If also works, as well as '?' .* :)
+OW		Otherwise		Else: (also works, as well as '-':)
+BTW		By the Way		Now ... - Existsing variable gets new value
+GA		Good answer/Go Ahead	Return (value follows)
+
+#Symbols
+~	relates
+@	at
+4	for
+2	to
+o	of
+=	is
+=@	is at: is listed in
+-@	remove at
+

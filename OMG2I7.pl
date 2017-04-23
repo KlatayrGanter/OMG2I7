@@ -1,10 +1,6 @@
 use warnings;
 use strict;
 # (C) GPL v3, by Klatayr Ganter, 2017
-#
-# FAQ? SOOL.
-
-use Lingua::EN::Inflect;
 
 my $in_func = 0;
 
@@ -13,9 +9,9 @@ my $S = qr/(\s+)/;
 my $W = qr/\s*(\b(?:\w+[-\s]+)*?\w+\b)\s*?/;
 my $e = qr/((?:\s*|\[[^]]*\])*)$/;
 my $to = qr/\s*(?:\b(?:2|to)(?![\w-])|-\>)(?:\s*the\b)?\s*/;
-my $of = qr/\s*(?:\b(?:4|of?)(?![\w-])|\<-|'[Oo]\b)(?:\s+the\b)?\s*/;
+my $of = qr/\s*(?:\b(?:4|of?)(?![\w-])|\<-|'?\b[Oo]\b)(?:\s+the\b)?\s*/;
 my $if = qr/\s*(?:\b(?:[Ii][FfCc])(?![\w-])|\?)(?:\s+the\b)?\s*/;
-my $else = qr/\s*(?:-|\b[Ee](?:lse|LSE)\b|O\/?W\b)\s*/;
+my $else = qr/\s*(?:-|\b[Ee](?:lse|LSE)\b|[Oo]\/?[Ww]\b)\s*/;
 my $at = qr/\s*(?:\b[Aa][Tt]\b|\@)\s*/;
 my $wrt = qr/\s*\b(?:WRT|4)\b\s*/;
 
@@ -23,12 +19,16 @@ my $so = qr/(?:\~|\=\s*SO\s+4\b)/;
 my $is = qr/\s*(?:=|:\s*(?=[^\[\s])|\b[Ii][Ss]\b)\s*/;
 my $next = qr/\s*\b(?:BRB|[Nn]ext)\b\s*/;
 my $ob = qr/\s*(?:\bOB\b|-)\s*/;
+my $IMO = qr/^IM(?:NS)?H?O\s+/;
 
 while (<>) {
-    if (/^IMO\s+/) {
-        s/^IMO\s+(.*?)$is$wrt([^:=)]+?):$e/IMO WRT $2 is $1:$3/;
-        s/^IMO$wrt$W$is/To decide which list of $1 is the /;
-        s/^IMO\s+/To decide whether /;
+    if (/$IMO/) {
+        s/$IMO(.*?)$is$wrt([^:=)]+?):$e/IMO WRT $2 is $1:$3/;
+        s/$IMO(.*?)$is([^:=)]+?):$e/IMO $2 is $1:$3/;
+        s/$IMO(.*?)$if:$e/To decide whether $1:$2/;
+        s/$IMO$wrt$W$is/To decide which list of $1 is /;
+        s/$IMO$W$is/To decide which $1 is /;
+        s/$IMO/To decide whether /;
         s/$wrt/ a list of /;
         $in_func = 1;
     } elsif ($in_func) {
@@ -49,13 +49,15 @@ while (<>) {
             s/^$S(?:BTW[:,]?|\$)$W=\s*/$1Now the $2 is the /;
 
             s/^${S}$wrt$W$at/$1Repeat with $2 running through the /;
-            s/^$S$W$is$ob$at$W;/$1Remove the $2 from the $3, if present;/;
-            s/^$S$W$is$ob$wrt$W;/$1Remove the $2 from the $3;/;
+            s/^$S$W-$at$W;/$1Remove the $2 from the $3, if present;/;
+            s/^$S$W-$at$W;/$1Remove the $2 from the $3;/;
 
             s/^$S(BRB|[Nn]ext|^-+)$if([^;]+?);$e/$1$2$3, Next;$4/;
             s/^$S(CU|[Bb]reak|v-+)$if([^;]+?);$e/$1$2$3, Break;$4/;
             s/(?:\s*,)?\s*-+\^$e/, Next;$1/;
             s/(?:\s*,)?\s*-+v$e/, Break;$1/;
+            s/\bGA\s+([Yy]es|[Nn]o)\s*;/Decide $1;/;
+            s/\bGA\s+$W;/Decide on $1;/;
             s/^${S}GA[:,]?\s*([^;]+?)(?:,\s*EOD)?;$e/$1Decide on $2;$3/;
 
             s/^$S$if\s*/$1If /;
