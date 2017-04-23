@@ -12,10 +12,10 @@ Usage:
 
 ```sh
 #if given the range argument only affects these lines, otherwise whole document.
-cat 'inform.i7x' | perl I72OMG.pl "10-15" > 'inform.i7y'
+cat 'inform.i7x' | perl I72OMG.pl "10-15" > 'omg.i7y'
 
 #only affects OMG subroutines, starting with IMO.
-cat 'inform.i7y' | perl OMG2I7.pl > 'back_to_inform.i7x'
+cat 'omg.i7y' | perl OMG2I7.pl > 'back_to_inform.i7x'
 ```
 example (inform):
 
